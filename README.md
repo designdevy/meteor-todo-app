@@ -1,5 +1,4 @@
 # meteor-todo-app
-ToDo app, using Meteor, React and Material-UI
 
 ## Technologies used
 
