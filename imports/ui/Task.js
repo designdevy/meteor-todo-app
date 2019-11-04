@@ -7,6 +7,7 @@ import {
   ListItemIcon,
   ListItemSecondaryAction,
   IconButton,
+  Button
 } from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
 import { withStyles } from "@material-ui/core/styles";
@@ -23,6 +24,11 @@ const styles = {
 // Task component - represents a single todo item
 export default withStyles(styles)(
   class Task extends Component {
+    state = {
+      titleEdited: this.props.task.text,
+      edited: false
+    };
+
     toggleChecked() {
       // Set the checked property to the opposite of its current value
       Tasks.update(this.props.task._id, {
@@ -34,35 +40,49 @@ export default withStyles(styles)(
       Tasks.remove(this.props.task._id);
     }
 
+    handleEditChange({ target: { value } }) {
+      this.setState({ titleEdited: value, edited: true });
+    }
+
+    handleEdit(e) {
+      e.preventDefault();
+      Tasks.update(this.props.task._id, {
+        text: this.state.titleEdited
+      });
+      this.setState({ edited: false });
+    }
+
     render() {
-      const { classes } = this.props
+      const { classes, key, task } = this.props;
 
       return (
-        <ListItem key={this.props.key} dense button onClick={this.toggleChecked.bind(this)}>
+        <ListItem
+          key={key}
+          dense
+          button
+          onClick={this.toggleChecked.bind(this)}
+        >
           <ListItemIcon>
             <Checkbox
               edge="start"
               tabIndex={-1}
               disableRipple
-              checked={!!this.props.task.checked}
+              checked={!!task.checked}
             />
           </ListItemIcon>
-          <form
-            // onSubmit={handleEdit(id, toDos, titleEdited.title)}
-            className={classes.form}
-          >
+          <form onSubmit={this.handleEdit.bind(this)} className={classes.form}>
             <InputBase
               name="title"
-              value={this.props.task.text}
-              // onChange={handleEditChange(id)}
+              value={this.state.titleEdited}
+              onChange={this.handleEditChange.bind(this)}
             />
-            {/* {titleEdited.id === id ? (
+            {this.state.edited ? (
               <Button type="submit" color="primary" variant="outlined">
-                Edit
+                Save
               </Button>
             ) : (
               <p />
-            )} */}
+            )}
           </form>
           <ListItemSecondaryAction>
             <IconButton

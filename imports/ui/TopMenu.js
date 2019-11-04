@@ -6,7 +6,9 @@ import { MenuOpen } from "../api/menu.js";
 
 class TopMenu extends React.Component {
   handleOpeningMenu() {
-    MenuOpen.update(this.props.menu._id, { menuOpen: !this.props.menu.menuOpen });
+    MenuOpen.update(this.props.menu._id, {
+      menuOpen: !this.props.menu.menuOpen
+    });
   }
 
   render() {
@@ -29,7 +31,7 @@ class TopMenu extends React.Component {
 }
 
 export default withTracker(() => {
-    return {
-      menu: MenuOpen.find({}).fetch()[0]
-    };
-  })(TopMenu)
+  return {
+    menu: MenuOpen.find({}).fetch()[0]
+  };
+})(TopMenu);
