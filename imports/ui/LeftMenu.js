@@ -27,7 +27,7 @@ const styles = {
 
       if (this.props.menu && this.props.menu.menuOpen) {
         return (
-          <Grid item xs={12} sm={2} className={classes.menu}>
+          <Grid item xs={12} sm={3} className={classes.menu}>
             <Link to="/" className={classes.link}>
               <Button
                 color="primary"

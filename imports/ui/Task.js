@@ -3,13 +3,14 @@ import { Tasks } from "../api/tasks.js";
 import {
   Checkbox,
   ListItem,
-  InputBase,
+  TextField,
   ListItemIcon,
   ListItemSecondaryAction,
   IconButton,
-  Button
+  Typography
 } from "@material-ui/core";
 import Delete from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = {
@@ -39,8 +40,12 @@ export default withStyles(styles)(
       Tasks.remove(this.props.task._id);
     }
 
+    handleStartEditing() {
+      this.setState({ edited: true });
+    }
+
     handleEditChange({ target: { value } }) {
-      this.setState({ titleEdited: value, edited: true });
+      this.setState({ titleEdited: value });
     }
 
     handleEdit(e) {
@@ -69,21 +74,30 @@ export default withStyles(styles)(
               checked={!!task.checked}
             />
           </ListItemIcon>
-          <form onSubmit={this.handleEdit.bind(this)} className={classes.form}>
-            <InputBase
-              name="title"
-              value={this.state.titleEdited}
-              onChange={this.handleEditChange.bind(this)}
-            />
-            {this.state.edited ? (
-              <Button type="submit" color="primary" variant="outlined">
-                Save
-              </Button>
-            ) : (
-              <p />
-            )}
-          </form>
+          {this.state.edited ? (
+            <form
+              onSubmit={this.handleEdit.bind(this)}
+              className={classes.form}
+            >
+              <TextField
+                name="title"
+                value={this.state.titleEdited}
+                onChange={this.handleEditChange.bind(this)}
+              />
+            </form>
+          ) : (
+            <Typography variant="subtitle1" gutterBottom>
+              {this.props.task.text}
+            </Typography>
+          )}
           <ListItemSecondaryAction>
+            <IconButton
+              color="primary"
+              edge="end"
+              onClick={this.handleStartEditing.bind(this)}
+            >
+              <EditIcon />
+            </IconButton>
             <IconButton
               color="primary"
               edge="end"
