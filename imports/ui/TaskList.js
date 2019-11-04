@@ -14,7 +14,7 @@ import { Tasks } from "../api/tasks.js";
 
 import Task from "./Task.js";
 import TopMenu from "./TopMenu";
-import LeftMenu from './LeftMenu'
+import LeftMenu from "./LeftMenu";
 
 const styles = {
   paper: { margin: "auto", padding: 20, maxWidth: 450 },
