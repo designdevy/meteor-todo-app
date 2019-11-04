@@ -15,9 +15,10 @@ import { Tasks } from "../api/tasks.js";
 import Task from "./Task.js";
 import TopMenu from "./TopMenu";
 import LeftMenu from "./LeftMenu";
+import BottomBar from "./BottomBar";
 
 const styles = {
-  paper: { margin: "auto", padding: 20, maxWidth: 450 },
+  paper: { margin: "auto", padding: 20, maxWidth: 550 },
   form: {
     display: "flex",
     alignItems: "baseline",
@@ -26,7 +27,8 @@ const styles = {
   root: {
     flexGrow: 1,
     padding: 25
-  }
+  },
+  image: { width: "100%", marginBottom: 15 }
 };
 
 class TaskList extends Component {
@@ -64,8 +66,13 @@ class TaskList extends Component {
         <TopMenu />
         <Grid container className={classes.root} spacing={2}>
           <LeftMenu />
-          <Grid item xs={12} sm={10}>
+          <Grid item xs={12} sm={9}>
             <Paper className={classes.paper}>
+              <img
+                className={classes.image}
+                src="https://cdn.pixabay.com/photo/2017/06/05/10/15/landscape-2373649_960_720.jpg"
+                alt="mountains"
+              />
               <Typography variant="h4" align="center" gutterBottom>
                 Tasks for today
               </Typography>
@@ -81,13 +88,14 @@ class TaskList extends Component {
                   margin="normal"
                 />
                 <Button type="submit" color="primary" variant="contained">
-                  Add task
+                  Add
                 </Button>
               </form>
               <List>{this.renderTasks()}</List>
             </Paper>
           </Grid>
         </Grid>
+        <BottomBar />
       </div>
     );
   }
